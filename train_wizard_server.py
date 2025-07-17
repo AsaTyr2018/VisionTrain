@@ -1,3 +1,4 @@
+import os
 import gradio as gr
 
 
@@ -19,4 +20,5 @@ with gr.Blocks() as wizard:
 
 
 if __name__ == "__main__":
-    wizard.launch()
+    host = os.environ.get("HOST", "0.0.0.0")
+    wizard.launch(server_name=host, share=False)
