@@ -13,6 +13,12 @@ wizard extracts the archive and passes the extracted path to the training
 command. Enable the checkbox to delete the extracted files automatically once
 training finishes.
 
+### Parameter Presets
+
+Select a preset (SD1.5, SDXL, or PonyXL) to auto-fill recommended values for the
+base model, learning rate, batch size, and network rank. These defaults are
+derived from the markdown reports under the `info` directory.
+
 ### Setup
 
 Install all dependencies in a Python virtual environment:
