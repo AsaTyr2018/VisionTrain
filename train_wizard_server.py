@@ -76,18 +76,30 @@ def start_training(
     return status
 
 with gr.Blocks() as wizard:
-    gr.Markdown("## LoRA Training Wizard")
+    gr.Markdown("# LoRA Training Wizard\nUpload a dataset and configure your run.")
 
-    dataset_zip = gr.File(label="Upload Zipped Dataset", file_types=[".zip"])
-    dest_dir = gr.Textbox(
-        label="Extract To", value="datasets", placeholder="Destination folder"
-    )
-    delete_after = gr.Checkbox(label="Delete dataset after training", value=False)
-    preset_choice = gr.Dropdown(label="Preset", choices=list(PRESETS.keys()), value="SD1.5")
-    model = gr.Textbox(label="Base Model")
-    learning_rate = gr.Textbox(label="Learning Rate")
-    batch_size = gr.Textbox(label="Batch Size")
-    rank = gr.Textbox(label="Network Rank")
+    with gr.Row():
+        with gr.Column():
+            gr.Markdown("### Dataset")
+            dataset_zip = gr.File(
+                label="Zipped Dataset", file_types=[".zip"], file_count="single"
+            )
+            dest_dir = gr.Textbox(
+                label="Extract To", value="datasets", placeholder="Destination folder"
+            )
+            delete_after = gr.Checkbox(
+                label="Delete dataset after training", value=False
+            )
+
+        with gr.Column():
+            gr.Markdown("### Training Settings")
+            preset_choice = gr.Dropdown(
+                label="Preset", choices=list(PRESETS.keys()), value="SD1.5"
+            )
+            model = gr.Textbox(label="Base Model")
+            learning_rate = gr.Textbox(label="Learning Rate")
+            batch_size = gr.Textbox(label="Batch Size")
+            rank = gr.Textbox(label="Network Rank")
 
     preset_choice.change(
         apply_preset,
@@ -95,8 +107,9 @@ with gr.Blocks() as wizard:
         outputs=[model, learning_rate, batch_size, rank],
     )
 
-    begin_button = gr.Button("Begin Training")
-    status = gr.Textbox(label="Status")
+    with gr.Row():
+        begin_button = gr.Button("Begin Training")
+        status = gr.Textbox(label="Status", interactive=False)
     begin_button.click(
         start_training,
         inputs=[dataset_zip, dest_dir, delete_after, model, learning_rate, batch_size, rank],

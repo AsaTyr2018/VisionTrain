@@ -3,7 +3,9 @@ LoRA Training Appliance
 
 ## Gradio Wizard
 
-A simple Gradio interface guides you through basic training options.
+A simple Gradio interface guides you through basic training options. The form
+is organized into two columns so dataset upload and training parameters are
+clearly separated for a smoother workflow.
 
 ### Dataset Upload
 
