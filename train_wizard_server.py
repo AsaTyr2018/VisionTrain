@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import time
 import zipfile
 
 import gradio as gr
@@ -27,6 +28,19 @@ PRESETS = {
         "rank": "16",
     },
 }
+
+
+def predict_vram(batch_size: str, rank: str) -> str:
+    """Return an estimated VRAM usage string for the given settings."""
+    try:
+        bs = int(batch_size)
+        rk = int(rank)
+    except (ValueError, TypeError):
+        return "Estimated VRAM: N/A"
+
+    base_mb = 2000
+    mem_mb = base_mb + bs * 500 + rk * 20
+    return f"Estimated VRAM: {mem_mb / 1024:.1f} GB"
 
 
 def _extract_dataset(zip_file: str, dest_dir: str) -> str:
@@ -58,12 +72,19 @@ def start_training(
     learning_rate: str,
     batch_size: str,
     rank: str,
+
 ) -> str:
-    """Extract the dataset, start training and optionally delete it."""
+    """Extract the dataset, simulate training, and optionally delete it."""
 
     dataset_path = _extract_dataset(dataset_zip, dest_dir)
 
-    # Here you would normally call the real training command.
+    epochs = 3
+    steps_per_epoch = 5
+    for epoch in range(1, epochs + 1):
+        for step in range(1, steps_per_epoch + 1):
+            yield f"Epoch {epoch}/{epochs} Step {step}/{steps_per_epoch}"
+            time.sleep(0.1)
+
     status = (
         f"Training with dataset: {dataset_path}, model: {model_name}, lr:"
         f" {learning_rate}, batch: {batch_size}, rank: {rank}."
@@ -73,7 +94,7 @@ def start_training(
         shutil.rmtree(dataset_path)
         status += " Dataset deleted after training."
 
-    return status
+    yield status
 
 with gr.Blocks() as wizard:
     gr.Markdown("# LoRA Training Wizard\nUpload a dataset and configure your run.")
@@ -101,11 +122,21 @@ with gr.Blocks() as wizard:
             batch_size = gr.Textbox(label="Batch Size")
             rank = gr.Textbox(label="Network Rank")
 
+    with gr.Row():
+        vram_info = gr.Markdown(predict_vram("2", "32"))
+
     preset_choice.change(
         apply_preset,
         inputs=preset_choice,
         outputs=[model, learning_rate, batch_size, rank],
+    ).then(
+        predict_vram,
+        inputs=[batch_size, rank],
+        outputs=vram_info,
     )
+
+    batch_size.change(predict_vram, inputs=[batch_size, rank], outputs=vram_info)
+    rank.change(predict_vram, inputs=[batch_size, rank], outputs=vram_info)
 
     with gr.Row():
         begin_button = gr.Button("Begin Training")

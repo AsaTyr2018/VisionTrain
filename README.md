@@ -21,6 +21,12 @@ Select a preset (SD1.5, SDXL, or PonyXL) to auto-fill recommended values for the
 base model, learning rate, batch size, and network rank. These defaults are
 derived from the markdown reports under the `info` directory.
 
+### VRAM Estimate
+
+An information box displays a rough VRAM estimate based on the current batch
+size and network rank. The value updates whenever you change these settings or
+select a new preset.
+
 ### Setup
 
 Install all dependencies in a Python virtual environment:
@@ -36,4 +42,6 @@ Start the wizard (the server listens on `0.0.0.0` for local network access):
 ```bash
 bash start.sh
 ```
+
+During training the status box now reports the current epoch and step.
 
