@@ -5,9 +5,19 @@ LoRA Training Appliance
 
 A simple Gradio interface guides you through basic training options.
 
-Run the server with:
+### Setup
+
+Install all dependencies in a Python virtual environment:
 
 ```bash
-python train_wizard_server.py
+bash setup.sh
+```
+
+### Launch
+
+Start the wizard (the server listens on `0.0.0.0` for local network access):
+
+```bash
+bash start.sh
 ```
 
