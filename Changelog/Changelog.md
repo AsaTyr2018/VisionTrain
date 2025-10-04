@@ -7,3 +7,13 @@
 **Docs:** README and docs scaffolding updated.  
 **Rollback Plan:** Restore previous state from Git history prior to this commit.  
 **Refs:** N/A
+
+## [2025-10-04 12:00] Draft training wizard project plan
+**Change Type:** Standard Change  
+**Why:** Document the redesign strategy for the upcoming training wizard.  
+**What changed:** Added a detailed project plan outlining vision, user flows, architecture, and milestones; linked the plan from the README.  
+**Impact:** Provides alignment for future development; no functional changes yet.  
+**Testing:** Documentation only; no tests required.  
+**Docs:** README and docs updated.  
+**Rollback Plan:** Remove `docs/project-plan.md` and revert README and changelog updates.  
+**Refs:** N/A
