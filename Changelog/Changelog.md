@@ -17,3 +17,13 @@
 **Docs:** README and docs updated.  
 **Rollback Plan:** Remove `docs/project-plan.md` and revert README and changelog updates.  
 **Refs:** N/A
+
+## [2025-10-04 09:56] Refresh README to match project direction
+**Change Type:** Standard Change  
+**Why:** Document the current vision and roadmap while the implementation is underway.  
+**What changed:** Rewrote the README to highlight planned wizard features, clarify project status, and point contributors to the project plan.  
+**Impact:** Documentation only; no functional code is affected.  
+**Testing:** Not applicable (documentation update).  
+**Docs:** README updated.  
+**Rollback Plan:** Revert README to the previous version and remove this changelog entry.  
+**Refs:** N/A
