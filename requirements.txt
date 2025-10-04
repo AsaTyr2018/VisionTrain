@@ -1,5 +1,0 @@
-gradio
-diffusers
-transformers
-accelerate
-bitsandbytes
